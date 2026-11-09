@@ -787,6 +787,14 @@
             } else a.volume = Math.max(0, Math.min(1, v));
           }, 60);
         }
+        function stopSound() {
+          clearInterval(t);
+          a.volume = 0;
+          a.muted = true;
+          b.classList.remove("on");
+          b.setAttribute("aria-pressed", "false");
+          l.textContent = "Sound off";
+        }
         b.addEventListener("click", function () {
           var on = b.classList.toggle("on");
           b.setAttribute("aria-pressed", on);
@@ -811,6 +819,10 @@
             });
           }
         });
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) stopSound();
+        });
+        window.addEventListener("pagehide", stopSound);
       })();
     </script>
   </body>
